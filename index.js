@@ -1,3 +1,4 @@
+require('dotenv').config()
 global.Discord = require('discord.js');
 const client = new Discord.Client();
 global.fetch = require('node-fetch');
@@ -45,4 +46,4 @@ client.on('message', async (message) => {
     }
 })
 
-client.login(token)
+client.login(process.env.token)
