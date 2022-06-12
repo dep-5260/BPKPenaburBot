@@ -4,6 +4,30 @@ const client = new Discord.Client();
 global.fetch = require('node-fetch');
 global.fs = require('fs');
 
+client.items = new Discord.Collection();
+client.begCD = new Discord.Collection();
+
+require('./api/items').forEach(item => {
+    console.log(`[Item Loader]: Loaded ${item.name}`)
+    client.items.set(item.name.toLowerCase(), item)
+})
+
+let status = {
+    online: true
+}
+
+setInterval(function() {
+    fetch(`https://n.soblok.cf/online`).then(res => {
+        console.log(res.status)
+        if(res.status == 200) {
+            status.online = true
+        } else {
+            status.online = false
+        }
+    })
+}, 5000)
+
+const { Collection } = require('discord.js');
 const { token, prefix } = require('./config.json');
 client.commands = new Discord.Collection();
 
@@ -38,9 +62,10 @@ client.on('message', async (message) => {
 
     let command = client.commands.get(cmd);
     if(!command) return;
-
+    if(command.name === "db") return command.run(client, message, args);
+    if(status.online == false) return message.reply("sorry. Our database is currently offline. To manually check, type `tk!db`. You can also manually check here https://takeaways.statuspage.io/")
     try {
-        command.run(message, args)
+        command.run(client, message, args)
     } catch(err) {
         console.log(err)
     }
