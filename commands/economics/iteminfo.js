@@ -1,5 +1,5 @@
 const { BaseClient } = require('discord.js')
-const db = require('../../api/database')
+const db = require('../../api/webdb.js')
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
 
         let all = new MessageEmbed()
         .setAuthor("All items from my market")
-        .setDescription(`${require('../../api/items').map(item => `${item.name}`)}`)
+        .setDescription(`${require('../../api/items').map(item => ` ${item.name}`)}`)
 
         if(!n) return message.channel.send(all);
         if(!item) return message.channel.send("Item not found", all)

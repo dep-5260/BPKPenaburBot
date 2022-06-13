@@ -1,16 +1,16 @@
 const { BaseClient } = require('discord.js')
-const db = require('../../api/database')
+const db = require('../../api/webdb.js')
 
 module.exports = {
     name: 'balance',
     description: 'Gets your economy balance',
     run: async(client, message, args) => {
-        let n = await db.exists(message.author.id)
-        if(n) {
-            let balance = await db.getBalance(message.author.id)
-            message.reply("here. Your balance is " + `\`${Number(balance).toLocaleString()}\``)
+        let worker = await client.ldb.getBalance(message.author.id);
+
+        if(worker.success == true) {
+            message.channel.send(`${message.author}, your balance is \`${Number(worker.balance).toLocaleString()}\`.`)
         } else {
-            message.reply("sorry. You haven't created an account yet on the database. Please type `tk!create` to create an account.")
+            message.channel.send(`${message.author}, have you made an account yet?`)
         }
     }
 }

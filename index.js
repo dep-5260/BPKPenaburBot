@@ -7,11 +7,15 @@ global.fs = require('fs');
 
 /**
  * BPK Penabur Bot
- * Version 1.0.4
+ * Version 1.5.0
  */
 
 client.items = new Discord.Collection();
 client.begCD = new Discord.Collection();
+client.database = {
+    type: 2 // 1 = Web, 2 = Local
+};
+client.ldb = require('./localdb.js')
 
 require('./api/items').forEach(item => {
     console.log(`[Item Loader]: Loaded ${item.name}`)
@@ -21,17 +25,6 @@ require('./api/items').forEach(item => {
 let status = {
     online: true
 }
-
-setInterval(function() {
-    fetch(`https://n.soblok.cf/online`).then(res => {
-        console.log(res.status)
-        if(res.status == 200) {
-            status.online = true
-        } else {
-            status.online = false
-        }
-    })
-}, 5000)
 
 const { Collection } = require('discord.js');
 const { token, prefix } = require('./config.json');
@@ -69,7 +62,7 @@ client.on('message', async (message) => {
     let command = client.commands.get(cmd);
     if(!command) return;
     if(command.name === "db") return command.run(client, message, args);
-    if(status.online == false) return message.reply("sorry. Our database is currently offline. To manually check, type `tk!db`. You can also manually check here https://takeaways.statuspage.io/")
+    if(client.database.type == 1 && status.online == false) return message.reply("sorry. Our database is currently offline. To manually check, type `tk!db`. You can also manually check here https://takeaways.statuspage.io/")
     try {
         command.run(client, message, args)
     } catch(err) {
