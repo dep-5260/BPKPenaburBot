@@ -1,5 +1,4 @@
 const { BaseClient } = require('discord.js')
-const db = require('../../api/webdb.js')
 
 module.exports = {
     name: 'balance',

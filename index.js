@@ -7,7 +7,7 @@ global.fs = require('fs');
 
 /**
  * BPK Penabur Bot
- * Version 1.5.0
+ * Version 1.7.5
  */
 
 client.items = new Discord.Collection();
