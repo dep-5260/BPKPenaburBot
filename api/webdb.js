@@ -89,5 +89,5 @@ module.exports = {
     addUserBalance: addUserBalance,
     subUserBalance: subUserBalance,
     exists: exists,
-    checkStatus: checkStatus()
+    checkStatus: checkStatus
 }

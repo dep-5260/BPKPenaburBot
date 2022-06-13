@@ -4,6 +4,12 @@ const client = new Discord.Client();
 global.fetch = require('node-fetch');
 global.fs = require('fs');
 
+
+/**
+ * BPK Penabur Bot
+ * Version 1.0.4
+ */
+
 client.items = new Discord.Collection();
 client.begCD = new Discord.Collection();
 

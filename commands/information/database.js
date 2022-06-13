@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 module.exports = {
     name: 'db',
     description: 'Checks the database ping and status.',
-    run: async(message, args) => {
+    run: async(client, message, args) => {
         let n = new Date()
         fetch(`https://n.soblok.cf/online`).then(res => {
             if(res.status === 200) {
