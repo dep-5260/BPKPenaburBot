@@ -3,6 +3,7 @@ const { BaseClient } = require('discord.js')
 module.exports = {
     name: 'balance',
     description: 'Gets your economy balance',
+    aliases: ['bal'],
     run: async(client, message, args) => {
         let worker = await client.ldb.getBalance(message.author.id);
 

@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: 'iteminfo',
     description: 'Gets information of an item',
+    aliases: ['iinfo'],
     run: async(client, message, args) => {
         let n = args.slice(0).join(" ");
         let item = client.items.get(n.toLowerCase());

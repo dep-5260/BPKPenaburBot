@@ -2,6 +2,7 @@ const fetch = require('node-fetch')
 module.exports = {
     name: 'db',
     description: 'Checks the database ping and status.',
+    aliases: ['database'],
     run: async(client, message, args) => {
         let n = new Date()
         if(client.database.type == 1) {

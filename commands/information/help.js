@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: 'help',
     description: 'Gives you the bot information embed',
+    aliases: ['h'],
     run: async(client, message, args) => {
         let embed = new MessageEmbed()
         .setAuthor(`${client.user.username}'s help information`)

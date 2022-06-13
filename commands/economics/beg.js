@@ -3,6 +3,7 @@ const { BaseClient } = require('discord.js')
 module.exports = {
     name: 'beg',
     description: 'You can beg for money',
+    aliases: [],
     run: async(client, message, args) => {
         let user = await client.ldb.exists(message.author.id)
         if(user.exists == false) return message.reply("sorry. You haven't created an account yet on the database. Please type `tk!create` to create an account.");

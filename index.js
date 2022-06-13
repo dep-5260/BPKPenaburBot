@@ -7,7 +7,7 @@ global.fs = require('fs');
 
 /**
  * BPK Penabur Bot
- * Version 1.7.5
+ * Version 2.0.0
  */
 
 client.items = new Discord.Collection();
@@ -29,6 +29,7 @@ let status = {
 const { Collection } = require('discord.js');
 const { token, prefix } = require('./config.json');
 client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
 
 client.once('ready', () => {
     console.log(`Bot Ready, Logged in as, ${client.user.tag}`)
@@ -45,6 +46,13 @@ modulesToLoad.forEach(async (module) => {
             if(command.name) {
                 client.commands.set(command.name, command)
                 console.log(`Loaded ${file}`)
+                if(command.aliases) {
+                    command.aliases.forEach(alias => {
+                        client.aliases.set(alias, command.name)
+                        console.log(`Loaded ${file}:${alias}`)
+                    })
+                }
+                if(command.aliases.length === 0) command.aliases = null;
             }
         })
     })
@@ -59,7 +67,7 @@ client.on('message', async (message) => {
     const cmd = args.shift().toLowerCase();
     if(!cmd) return;
 
-    let command = client.commands.get(cmd);
+    let command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
     if(!command) return;
     if(command.name === "db") return command.run(client, message, args);
     if(client.database.type == 1 && status.online == false) return message.reply("sorry. Our database is currently offline. To manually check, type `tk!db`. You can also manually check here https://takeaways.statuspage.io/")
